@@ -44,42 +44,102 @@ class UndirectedGraph:
         """
         Add new vertex to the graph
         """
+        self.adj_list[v] = []
+        return
         
     def add_edge(self, u: str, v: str) -> None:
         """
-        Add edge to the graph
+        Add edge to the graph. U is the edge, V is the vertex
         """
+        if u in self.adj_list:
+            if v in self.adj_list:
+            # Vertex exists
+                #If the vertex edge exists return
+                if u in self.adj_list[v]:
+                    return
+                #If edge does not exist, add
+                else:
+                    self.adj_list[v].append(u)
+                #Making sure the edge exists for the other vertex
+                if v in self.adj_list[u]:
+                    return
+                else:
+                    #Adding the vertex (now edge) to the new vertex
+                    self.add_edge(v,u)
+            else:
+                self.add_vertex(v)
+                self.add_edge(u,v)
+        else:
+            # Vertex does not exist so add
+            self.add_vertex(u)
+            self.add_edge(u, v)
+
+
+        return
         
 
     def remove_edge(self, v: str, u: str) -> None:
         """
-        Remove edge from the graph
+        Remove edge from the graph. U is the egde, V is the vertex
         """
+        if v in self.adj_list and u in self.adj_list[v]:
+            #Making sure to delete edge from both vertices
+            self.adj_list[v].remove(u)
+            self.adj_list[u].remove(v)
+        else:
+            return
         
 
     def remove_vertex(self, v: str) -> None:
         """
         Remove vertex and all connected edges
         """
-        
+        if v in self.adj_list:
+            self.adj_list.pop(v,None)
+            for i in self.adj_list:
+                if v in self.adj_list[i]:
+                    self.adj_list[i].remove(v)
+        return
 
     def get_vertices(self) -> []:
         """
         Return list of vertices in the graph (any order)
         """
-       
+        list = []
+        for i in self.adj_list:
+            list.append(i)
+        return list
 
     def get_edges(self) -> []:
         """
         Return list of edges in the graph (any order)
         """
-        
+        list = []
+        for i in self.adj_list:
+            for j in range(0,len(self.adj_list[i])):
+                if [i,self.adj_list[i][j]] not in list:
+                    if [self.adj_list[i][j],i] not in list:
+                        list.append([i,self.adj_list[i][j]])
+        return list
 
     def is_valid_path(self, path: []) -> bool:
         """
         Return true if provided path is valid, False otherwise
         """
-       
+        if path == []:
+            return True
+        elif len(path) == 1 and path[0] in self.get_vertices():
+            return True
+
+        compare = self.get_edges()
+        boolean = False
+        for i in range(1,len(path)):
+            if [path[i-1],path[i]] in compare or [path[i],path[i-1]] in compare:
+                boolean = True
+            else:
+                boolean = False
+                return boolean
+        return boolean
 
     def dfs(self, v_start, v_end=None) -> []:
         """
