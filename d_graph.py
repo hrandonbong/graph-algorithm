@@ -145,17 +145,20 @@ class DirectedGraph:
             pop = stack.pop()
             if pop not in list:
                 list.append(pop)
+
+                #Ending with the loop
                 if v_end is not None:
                     if pop == v_end:
                         break
+
                 path = self.adj_matrix[pop]
-                dict = {}
+                actual_path = []
                 for i in range(0,self.v_count):
                     if path[i] != 0:
-                        dict[path[i]] = i
-                for i in range(self.v_count-1,-1,-1):
-                    if path[i] != 0 and dict[path[i]] not in list:
-                        stack.append(dict[path[i]])
+                        actual_path.append(i)
+                for i in range(len(actual_path)-1,-1,-1):
+                    if actual_path[i] not in list:
+                        stack.append(actual_path[i])
         return list
 
     def bfs(self, v_start, v_end=None) -> []:
@@ -174,17 +177,20 @@ class DirectedGraph:
             pop = queue.pop(0)
             if pop not in list:
                 list.append(pop)
+
+                # Ending with the loop
                 if v_end is not None:
                     if pop == v_end:
                         break
+
                 path = self.adj_matrix[pop]
-                dict = {}
+                actual_path = []
                 for i in range(0, self.v_count):
                     if path[i] != 0:
-                        dict[path[i]] = i
-                for i in path:
-                    if i != 0 and dict[i] not in list:
-                        queue.append(dict[i])
+                        actual_path.append(i)
+                for i in range(0,len(actual_path)):
+                    if actual_path[i] not in list:
+                        queue.append(actual_path[i])
         return list
 
     def has_cycle(self):
