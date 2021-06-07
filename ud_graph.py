@@ -122,9 +122,9 @@ class UndirectedGraph:
         list = []
         for i in self.adj_list:
             for j in range(0,len(self.adj_list[i])):
-                if [i,self.adj_list[i][j]] not in list:
-                    if [self.adj_list[i][j],i] not in list:
-                        list.append([i,self.adj_list[i][j]])
+                if (i,self.adj_list[i][j]) not in list:
+                    if (self.adj_list[i][j],i) not in list:
+                        list.append((i,self.adj_list[i][j]))
         return list
 
     def is_valid_path(self, path: []) -> bool:
