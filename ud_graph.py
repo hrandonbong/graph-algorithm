@@ -44,6 +44,8 @@ class UndirectedGraph:
         """
         Add new vertex to the graph
         """
+        if v in self.adj_list:
+            return
         self.adj_list[v] = []
         return
         
@@ -146,6 +148,25 @@ class UndirectedGraph:
         Return list of vertices visited during DFS search
         Vertices are picked in alphabetical order
         """
+        list = []
+        stack = []
+        stack.append(v_start)
+        if v_start not in self.adj_list:
+            return list
+        while len(stack) > 0:
+            pop = stack.pop()
+            if pop not in list:
+                list.append(pop)
+                if v_end is not None:
+                    if pop == v_end:
+                        break
+                path = sorted(self.adj_list[pop],reverse=True)
+                for i in path:
+                    if i not in list:
+                        stack.append(i)
+        return list
+
+
        
 
     def bfs(self, v_start, v_end=None) -> []:
@@ -153,18 +174,85 @@ class UndirectedGraph:
         Return list of vertices visited during BFS search
         Vertices are picked in alphabetical order
         """
-        
+        list = []
+        queue = []
+        queue.append(v_start)
+        if v_start not in self.adj_list:
+            return list
+        while len(queue) > 0:
+            pop = queue.pop(0)
+            if pop not in list:
+                list.append(pop)
+                if v_end is not None:
+                    if pop == v_end:
+                        break
+                path = sorted(self.adj_list[pop])
+                for i in path:
+                    if i not in list:
+                        queue.append(i)
+        return list
 
     def count_connected_components(self):
         """
         Return number of connected componets in the graph
         """
-      
+        visited = []
+        traversed = []
+        count = 0
+        for i in self.adj_list:
+            if i not in visited and i not in traversed:
+                traversed = self.dfs(i)
+                for j in traversed:
+                    visited.append(j)
+                count += 1
+        return count
 
     def has_cycle(self):
         """
         Return True if graph contains a cycle, False otherwise
         """
+        j = 0
+        current = dict()
+
+        for i in self.adj_list:
+            current[i] = j
+            j += 1
+
+        #We are going to go with every node until we find a cylce
+        for i in self.adj_list:
+            #We are keeping track of which node we are trying to return to
+            parent = [-1] * len(self.adj_list)
+
+            #Creating an array of non visited nodes
+            visited = [False] * len(self.adj_list)
+
+            #Currently we visited our node i
+            visited[current[i]] = True
+
+            #BFS method cuz first value and we out
+            queue = []
+            queue.append(i)
+
+            while queue != []:
+                #Starting node
+                u = queue.pop(0)
+
+                #Looking at edges
+                for v in self.adj_list[u]:
+
+                    #If the current edge hasn't been visited enter if statement
+                    if not visited[current[v]]:
+                        #Add to our visited
+                        visited[current[v]] = True
+                        queue.append(v)
+                        #Second tracker of visit
+                        parent[current[v]] = u
+                    #If parent did equal v, it would mean we were going back but
+                    #with the same route we already traversed
+                    elif parent[current[u]] != v:
+                        return True
+
+        return False
        
 
    
