@@ -139,7 +139,7 @@ class UndirectedGraph:
         compare = self.get_edges()
         boolean = False
         for i in range(1,len(path)):
-            if [path[i-1],path[i]] in compare or [path[i],path[i-1]] in compare:
+            if (path[i-1],path[i]) in compare or (path[i],path[i-1]) in compare:
                 boolean = True
             else:
                 boolean = False
