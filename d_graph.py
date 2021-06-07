@@ -58,7 +58,7 @@ class DirectedGraph:
 
         if self.v_count == 1:
             self.adj_matrix.append([0])
-            return
+            return self.v_count
 
         self.adj_matrix.append([0]*self.v_count)
         temp = 0
@@ -66,7 +66,7 @@ class DirectedGraph:
         for i in range(0,self.v_count-1):
             self.adj_matrix[i].append(temp)
 
-        return
+        return self.v_count
 
     def add_edge(self, src: int, dst: int, weight=1) -> None:
         """
@@ -90,6 +90,10 @@ class DirectedGraph:
         if src == dst:
             return
         elif src > self.v_count-1:
+            return
+        elif dst > self.v_count-1:
+            return
+        elif self.adj_matrix[src][dst] < 0:
             return
 
         self.adj_matrix[src][dst] = 0
