@@ -52,51 +52,136 @@ class DirectedGraph:
 
     def add_vertex(self) -> int:
         """
-        TODO: Write this implementation
+        Adds a vertex to the weighted graph
         """
-        pass
+        self.v_count = self.v_count + 1
+
+        if self.v_count == 1:
+            self.adj_matrix.append([0])
+            return
+
+        self.adj_matrix.append([0]*self.v_count)
+        temp = 0
+
+        for i in range(0,self.v_count-1):
+            self.adj_matrix[i].append(temp)
+
+        return
 
     def add_edge(self, src: int, dst: int, weight=1) -> None:
         """
-        TODO: Write this implementation
+        Adds a weighted edge between 2 vertices
         """
-        pass
+        if src == dst:
+            return
+        elif src > self.v_count-1:
+            return
+        elif dst > self.v_count-1:
+            return
+        elif weight < 0:
+            return
+
+        self.adj_matrix[src][dst] = weight
 
     def remove_edge(self, src: int, dst: int) -> None:
         """
-        TODO: Write this implementation
+        Removes the edge between specified vertex
         """
-        pass
+        if src == dst:
+            return
+        elif src > self.v_count-1:
+            return
+
+        self.adj_matrix[src][dst] = 0
 
     def get_vertices(self) -> []:
         """
-        TODO: Write this implementation
+        Returns the vertices in the graph
         """
-        pass
+        list = []
+        for i in range(0,self.v_count):
+            list.append(i)
+        return list
 
     def get_edges(self) -> []:
         """
-        TODO: Write this implementation
+        Returns the  edges of vertex with their weights
         """
-        pass
+        list = []
+        for i in range(0,self.v_count):
+            for j in range(0,self.v_count):
+                if self.adj_matrix[i][j] > 0:
+                    list.append((i,j,self.adj_matrix[i][j]))
+        return list
 
     def is_valid_path(self, path: []) -> bool:
         """
-        TODO: Write this implementation
+        Returns true for valid paths and false for invalid paths
         """
-        pass
+        if len(path) == 0 or (len(path) == 1 and path[0] < self.v_count-1):
+            return True
+        for i in range(1,len(path)):
+            if self.adj_matrix[path[i-1]][path[i]] == 0:
+                return False
+        return True
 
     def dfs(self, v_start, v_end=None) -> []:
         """
-        TODO: Write this implementation
+        Depth First Search
         """
-        pass
+        list = []
+        stack = []
+        stack.append(v_start)
+
+        #means the vertex is not in our matrix
+        if v_start > self.v_count-1:
+            return list
+
+        while len(stack) > 0:
+            pop = stack.pop()
+            if pop not in list:
+                list.append(pop)
+                if v_end is not None:
+                    if pop == v_end:
+                        break
+                path = self.adj_matrix[pop]
+                dict = {}
+                for i in range(0,self.v_count):
+                    if path[i] != 0:
+                        dict[path[i]] = i
+                for i in range(self.v_count-1,-1,-1):
+                    if path[i] != 0 and dict[path[i]] not in list:
+                        stack.append(dict[path[i]])
+        return list
 
     def bfs(self, v_start, v_end=None) -> []:
         """
         TODO: Write this implementation
         """
-        pass
+        list = []
+        queue = []
+        queue.append(v_start)
+
+        # means the vertex is not in our matrix
+        if v_start > self.v_count - 1:
+            return list
+
+        while len(queue) > 0:
+            pop = queue.pop(0)
+            if pop not in list:
+                list.append(pop)
+                if v_end is not None:
+                    if pop == v_end:
+                        break
+                path = self.adj_matrix[pop]
+                dict = {}
+                for i in range(0, self.v_count):
+                    if path[i] != 0:
+                        dict[path[i]] = i
+                for i in path:
+                    if i != 0 and dict[i] not in list:
+                        queue.append(dict[i])
+        return list
 
     def has_cycle(self):
         """
