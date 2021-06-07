@@ -53,6 +53,9 @@ class UndirectedGraph:
         """
         Add edge to the graph. U is the edge, V is the vertex
         """
+        if u == v:
+            return
+
         if u in self.adj_list:
             if v in self.adj_list:
             # Vertex exists
