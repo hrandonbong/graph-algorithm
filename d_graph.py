@@ -2,7 +2,7 @@
 # Author:
 # Assignment:
 # Description:
-
+import heapq
 class DirectedGraph:
     """
     Class to implement directed weighted graph
@@ -224,9 +224,37 @@ class DirectedGraph:
 
     def dijkstra(self, src: int) -> []:
         """
-        TODO: Write this implementation
+        Returns the shortest path from Src node to all other nodes
         """
-        pass
+        visited = [False] * self.v_count
+        distances = ['inf'] * self.v_count
+        distances[src] = 0
+
+        heap = []
+        heap.append([0,src])
+        while len(heap) > 0:
+            pop = heapq.heappop(heap)
+            node = pop[1]
+            row = self.adj_matrix[node]
+
+            for i in range(0, self.v_count):
+                if row[i] != 0:
+                    # Making sure we take the shortest path
+                    if visited[i]:
+                        compare = row[i] + distances[node]
+                        distances[i] = min(distances[i], compare)
+                    else:
+                        distances[i] = row[i] + distances[node]
+                        heapq.heappush(heap, [distances[i], i])
+            visited[node] = True
+
+        return distances
+
+
+
+
+
+
 
 
 if __name__ == '__main__':
