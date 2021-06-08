@@ -226,7 +226,7 @@ class DirectedGraph:
         """
         Returns the shortest path from Src node to all other nodes
         """
-        visited = [False] * self.v_count
+
         distances = [float('inf')] * self.v_count
         distances[src] = 0
 
@@ -240,13 +240,13 @@ class DirectedGraph:
             for i in range(0, self.v_count):
                 if row[i] != 0:
                     # Making sure we take the shortest path
-                    if visited[i]:
+                    if distances[i] != float('inf'):
                         compare = row[i] + distances[node]
                         distances[i] = min(distances[i], compare)
                     else:
                         distances[i] = row[i] + distances[node]
                         heapq.heappush(heap, [distances[i], i])
-            visited[node] = True
+
 
         return distances
 
@@ -332,3 +332,12 @@ if __name__ == '__main__':
     print('\n', g)
     for i in range(5):
         print(f'DIJKSTRA {i} {g.dijkstra(i)}')
+
+    print("\nPDF - dijkstra() example 2")
+    print("--------------------------")
+    edges = [(2, 6, 5), (2, 8, 7),(3, 1, 20),(3, 2, 15),(4, 10, 7),
+             (5, 12, 1), (6, 12, 3),(7, 12, 17),(8, 12, 10),(11, 9, 12)
+             , (12, 4, 4), (12, 9, 14)]
+    g = DirectedGraph(edges)
+    print(f'DIJKSTRA {2} {g.dijkstra(2)}')
+
