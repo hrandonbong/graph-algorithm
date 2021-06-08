@@ -195,9 +195,32 @@ class DirectedGraph:
 
     def has_cycle(self):
         """
-        TODO: Write this implementation
+        Detects a cycle in the graph
         """
-        pass
+        def isCyclicUtil(node, visited, recStack,matrix):
+            visited[node] = True
+            # recStack[node] = node
+
+            inner = []
+            for i in range(0,len(matrix)):
+                if matrix[node][i] != 0:
+                    inner.append(i)
+
+            for neighbor in range(0,len(inner)):
+                if visited[inner[neighbor]] == False:
+                    if isCyclicUtil(inner[neighbor], visited, recStack,matrix) == True:
+                        return True
+                elif recStack == inner[neighbor]:
+                    return True
+
+        for node in range(0,self.v_count):
+            visited = [False] * (self.v_count)
+            recStack = node
+
+            if visited[node] == False:
+                if isCyclicUtil(node, visited, recStack,self.adj_matrix) == True:
+                    return True
+        return False
 
     def dijkstra(self, src: int) -> []:
         """
