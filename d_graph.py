@@ -227,7 +227,7 @@ class DirectedGraph:
         Returns the shortest path from Src node to all other nodes
         """
         visited = [False] * self.v_count
-        distances = ['inf'] * self.v_count
+        distances = [float('inf')] * self.v_count
         distances[src] = 0
 
         heap = []
