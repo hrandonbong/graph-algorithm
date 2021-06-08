@@ -163,7 +163,7 @@ class DirectedGraph:
 
     def bfs(self, v_start, v_end=None) -> []:
         """
-        TODO: Write this implementation
+        Uses a breadth first search algorithm
         """
         list = []
         queue = []
