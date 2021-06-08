@@ -240,9 +240,11 @@ class DirectedGraph:
             for i in range(0, self.v_count):
                 if row[i] != 0:
                     # Making sure we take the shortest path
+                    #If distance has a value it means we visited it
                     if distances[i] != float('inf'):
                         compare = row[i] + distances[node]
                         distances[i] = min(distances[i], compare)
+                    #Else we can move on
                     else:
                         distances[i] = row[i] + distances[node]
                         heapq.heappush(heap, [distances[i], i])
