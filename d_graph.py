@@ -1,7 +1,8 @@
 # Course: CS261 - Data Structures
-# Author:
-# Assignment:
-# Description:
+# Author: Brandon Hong
+# Date: 6/10/21
+# Description: A directed graph that utilizes DFS, BFS, and Dijkstra's algorithm to compute graph inputs
+#              and desired outputs. Can be used to find shortest paths to certain problems.
 import heapq
 class DirectedGraph:
     """

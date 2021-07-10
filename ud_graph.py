@@ -1,7 +1,7 @@
-# Course: 
-# Author: 
-# Assignment: 
-# Description:
+# Course: CS261 - Data Structures
+# Author: Brandon Hong
+# Date: 6/10/21
+# Description: A undirected graph that utilizes DFS and BFS methods.
 
 
 class UndirectedGraph:
@@ -197,7 +197,7 @@ class UndirectedGraph:
 
     def count_connected_components(self):
         """
-        Return number of connected componets in the graph
+        Return number of connected components in the graph
         """
         visited = []
         traversed = []
