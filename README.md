@@ -17,7 +17,9 @@ contains a cycle.
 ##Links
 ###Dijkstra's Algorithm
 - https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+
 ###Breadth-first search
 - https://en.wikipedia.org/wiki/Breadth-first_search
+
 ###Depth-first search
 - https://en.wikipedia.org/wiki/Depth-first_search
